@@ -15,7 +15,7 @@
         }
 
         body {
-            background-color: #0b0f19;
+            background-color: #05070f;
             color: #ffffff;
             min-height: 100vh;
             display: flex;
@@ -25,7 +25,7 @@
             position: relative;
         }
 
-        /* Canvas hiệu ứng sao/hoa rơi nền tối */
+        /* Canvas sao lấp lánh nền */
         #bgCanvas {
             position: absolute;
             top: 0;
@@ -36,15 +36,15 @@
             pointer-events: none;
         }
 
-        /* Nút bật tắt nhạc góc phải */
-        .music-toggle {
+        /* Nút âm nhạc góc phải */
+        .music-btn {
             position: fixed;
             top: 20px;
             right: 20px;
-            width: 42px;
-            height: 42px;
+            width: 45px;
+            height: 45px;
             background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -53,65 +53,68 @@
             z-index: 100;
             font-size: 20px;
             border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             transition: transform 0.3s;
         }
-        .music-toggle.playing {
+        .music-btn.playing {
             animation: spin 3s linear infinite;
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* Khung chứa nội dung chính dạng kính mờ */
-        .content-box {
+        /* Khung chính mờ ảo sang trọng */
+        .container {
             position: relative;
             z-index: 10;
             width: 90%;
             max-width: 420px;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            border-radius: 24px;
-            padding: 35px 24px;
+            background: rgba(13, 19, 33, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(147, 197, 253, 0.3);
+            border-radius: 28px;
+            padding: 40px 24px;
             text-align: center;
-            box-shadow: 0 0 35px rgba(56, 189, 248, 0.2);
+            box-shadow: 0 0 40px rgba(56, 189, 248, 0.25);
         }
 
-        /* Cặp mắt nhấp nháy dễ thương */
-        .cute-eyes {
+        /* Cặp hộp sáng biểu cảm phía trên */
+        .face-boxes {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: 18px;
+            margin-bottom: 30px;
         }
-        .eye {
-            width: 32px;
-            height: 38px;
-            background: #38bdf8;
+        .box-item {
+            width: 38px;
+            height: 44px;
+            background: linear-gradient(135deg, #38bdf8, #0284c7);
             border-radius: 12px;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.9);
-            animation: blink 3s infinite;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.8);
+            animation: bounceBox 2s infinite ease-in-out;
         }
-        @keyframes blink {
-            0%, 96%, 100% { transform: scaleY(1); }
-            98% { transform: scaleY(0.1); }
+        .box-item:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+        @keyframes bounceBox {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
         }
 
-        /* Khu vực hiển thị văn bản mượt mà */
-        .text-display {
+        /* Hiệu ứng hiển thị chữ */
+        .message-box {
             font-size: 1.15rem;
-            line-height: 1.7;
-            color: #e2e8f0;
-            min-height: 110px;
+            line-height: 1.8;
+            color: #f1f5f9;
+            min-height: 120px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
             margin-bottom: 25px;
-            animation: fadeIn 0.5s ease;
+            animation: fadeInText 0.5s ease;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes fadeInText {
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -120,132 +123,155 @@
             font-weight: 700;
         }
 
-        /* Nút bấm tương tác */
-        .action-btn {
-            background: linear-gradient(135deg, #38bdf8, #0284c7);
+        /* Nút tương tác */
+        .next-btn {
+            background: linear-gradient(135deg, #38bdf8, #2563eb);
             color: #ffffff;
             border: none;
-            padding: 12px 28px;
+            padding: 13px 30px;
             border-radius: 30px;
-            font-size: 1rem;
+            font-size: 1.05rem;
             font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
             transition: all 0.2s ease;
             outline: none;
         }
-        .action-btn:active {
-            transform: scale(0.95);
+        .next-btn:active {
+            transform: scale(0.94);
+        }
+
+        .flower-decoration {
+            position: absolute;
+            bottom: -15px;
+            left: 20px;
+            font-size: 24px;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        .flower-decoration.right {
+            left: auto;
+            right: 20px;
         }
     </style>
 </head>
 <body>
 
-    <div class="music-toggle" id="musicBtn" onclick="toggleAudio()">🎵</div>
+    <div class="music-btn" id="musicToggle" onclick="toggleMusic()">🎵</div>
     <canvas id="bgCanvas"></canvas>
 
-    <!-- Nhạc nền "Vì đã lỡ yêu em rồi" -->
-    <audio id="bgAudio" loop src="https://files.catbox.moe/knh51p.mp3"></audio>
+    <!-- Nhạc nền "Vì đã lỡ yêu em rồi" trực tiếp -->
+    <audio id="bgAudio" loop preload="auto" src="https://files.catbox.moe/knh51p.mp3"></audio>
 
-    <div class="content-box">
-        <div class="cute-eyes">
-            <div class="eye"></div>
-            <div class="eye"></div>
+    <div class="container">
+        <div class="face-boxes">
+            <div class="box-item"></div>
+            <div class="box-item"></div>
         </div>
-        <div class="text-display" id="textContent">
+
+        <div class="message-box" id="textContent">
             Này chị gì ơi... Bấm vào đây để xem chút bất ngờ nhé! ✨
         </div>
-        <button class="action-btn" id="mainBtn" onclick="nextStep()">Bắt đầu thui 😉</button>
+
+        <button class="next-btn" id="actionBtn" onclick="nextStep()">Bắt đầu thui 😉</button>
+
+        <div class="flower-decoration">🌷</div>
+        <div class="flower-decoration right">🌸</div>
     </div>
 
     <script>
-        // Kịch bản theo đúng ý bạn
+        // Kịch bản chuẩn theo yêu cầu của bạn
         const steps = [
-            "Này chị gì ơi... Hôm nay ngày 19 chưa có gì đặc biệt...",
+            "Hôm nay 19 chưa có gì đặc biệt...",
             "Nó chỉ là một ngày bình thường cạnh một <span class='highlight'>ngày mai rất đặc biệt!</span> ✨",
             "Em mới gặp chị á... Nhưng em thấy chị là một người dễ thương, dễ gần kkk. 😊",
-            "Nói ra hơi ngại nhưng em mong hôm nay tạo được một chút bất ngờ gì đó cho chị!",
-            "Tối 19 có cái gì đó vui vui thì chẳng phải <span class='highlight'>ngày 20 vui cả ngày</span> à... 🌸",
+            "Nói ra hơi ngại nhưng em mong hôm nay tạo được một cái bất ngờ gì cho chị!",
+            "Tối 19 có cái gì đó thì chẳng phải <span class='highlight'>ngày 20 vui cả ngày</span> à... 🌸",
             "Em chúc chị luôn xinh đẹp, chúc chị luôn giữ được nụ cười rạng rỡ mỗi ngày! 🥰",
             "🍀 Em tặng chị cỏ 4 lá này...\nChúc chị luôn gặp thật nhiều may mắn và bình an!",
-            "Chị có muốn xem tiếp nữa không nhỉ?..."
+            "Chị muốn xem tiếp nữa không nhỉ?..."
         ];
 
         let currentStep = -1;
-        const textElem = document.getElementById('textContent');
-        const btnElem = document.getElementById('mainBtn');
+        const textElement = document.getElementById('textContent');
+        const btnElement = document.getElementById('actionBtn');
         const audio = document.getElementById('bgAudio');
+        const musicToggle = document.getElementById('musicToggle');
         let musicStarted = false;
 
-        function toggleAudio() {
+        function toggleMusic() {
             if (audio.paused) {
-                audio.play();
-                document.getElementById('musicBtn').classList.add('playing');
+                audio.play().then(() => {
+                    musicToggle.classList.add('playing');
+                }).catch(e => console.log(e));
             } else {
                 audio.pause();
-                document.getElementById('musicBtn').classList.remove('playing');
+                musicToggle.classList.remove('playing');
             }
         }
 
         function nextStep() {
+            // Đảm bảo nhạc phát ngay khi bấm nút đầu tiên
             if (!musicStarted) {
                 audio.play().then(() => {
                     musicStarted = true;
-                    document.getElementById('musicBtn').classList.add('playing');
-                }).catch(()=>{});
+                    musicToggle.classList.add('playing');
+                }).catch(err => {
+                    console.log("Autoplay blocked:", err);
+                });
             }
 
             currentStep++;
 
             if (currentStep < steps.length) {
-                textElem.innerHTML = steps[currentStep];
+                textElement.innerHTML = steps[currentStep];
                 if (currentStep === steps.length - 1) {
-                    btnElem.innerText = "Xem tiếp xem có gì nào...";
+                    btnElement.innerText = "Xem tiếp xem có gì nào...";
                 } else {
-                    btnElem.innerText = "Xem tiếp nha...";
+                    btnElement.innerText = "Xem tiếp nha...";
                 }
             } else {
-                // Cú twist cuối cùng
-                textElem.innerHTML = "<span class='highlight' style='font-size: 1.3rem;'>Ể? Hết rồi! 😜</span><br><br>... nhưng mà hết mất rồi!<br>Nếu chị muốn xem thêm thì <span class='highlight'>đợi ngày mai 20/10 nha!</span> 💖";
-                btnElem.style.display = 'none';
+                // Cú twist cuối cùng chuẩn chỉnh
+                textElement.innerHTML = "<span class='highlight' style='font-size: 1.35rem;'>Ể? Hết rồi! 😜</span><br><br>... nhưng mà hết mất rồi!<br>Nếu chị muốn xem thêm thì <span class='highlight'>đợi ngày mai 20/10 nha!</span> 💖";
+                btnElement.style.display = 'none';
             }
         }
 
-        // Hiệu ứng hạt sao chuyển động trên nền tối
+        // Hiệu ứng sao lấp lánh nền
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        const particles = [];
-        for (let i = 0; i < 50; i++) {
-            particles.push({
+        const stars = [];
+        for (let i = 0; i < 60; i++) {
+            stars.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                size: Math.random() * 3 + 1,
-                speedY: Math.random() * 1 + 0.3,
-                opacity: Math.random() * 0.7 + 0.2
+                size: Math.random() * 2.5 + 0.8,
+                speed: Math.random() * 0.8 + 0.2,
+                opacity: Math.random() * 0.8 + 0.2
             });
         }
 
-        function animate() {
+        function renderStars() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#ffffff';
-            particles.forEach(p => {
-                ctx.globalAlpha = p.opacity;
+            stars.forEach(s => {
+                ctx.globalAlpha = s.opacity;
                 ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
                 ctx.fill();
 
-                p.y += p.speedY;
-                if (p.y > canvas.height) {
-                    p.y = 0;
-                    p.x = Math.random() * canvas.width;
+                s.y += s.speed;
+                if (s.y > canvas.height) {
+                    s.y = 0;
+                    s.x = Math.random() * canvas.width;
                 }
             });
-            requestAnimationFrame(animate);
+            requestAnimationFrame(renderStars);
         }
-        animate();
+        renderStars();
 
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
