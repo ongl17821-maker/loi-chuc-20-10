@@ -15,7 +15,7 @@
         }
 
         body {
-            background-color: #05070f;
+            background-color: #0b0f19;
             color: #ffffff;
             min-height: 100vh;
             display: flex;
@@ -25,7 +25,7 @@
             position: relative;
         }
 
-        /* Canvas sao lấp lánh nền */
+        /* Canvas nền sao rơi */
         #bgCanvas {
             position: absolute;
             top: 0;
@@ -36,13 +36,13 @@
             pointer-events: none;
         }
 
-        /* Nút âm nhạc góc phải */
+        /* Nút bật tắt nhạc */
         .music-btn {
             position: fixed;
             top: 20px;
             right: 20px;
-            width: 45px;
-            height: 45px;
+            width: 44px;
+            height: 44px;
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(8px);
             border-radius: 50%;
@@ -61,7 +61,7 @@
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* Khung chính mờ ảo sang trọng */
+        /* Khung kính mờ chính */
         .container {
             position: relative;
             z-index: 10;
@@ -70,51 +70,58 @@
             background: rgba(13, 19, 33, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(147, 197, 253, 0.3);
+            border: 1px solid rgba(56, 189, 248, 0.3);
             border-radius: 28px;
-            padding: 40px 24px;
+            padding: 35px 24px;
             text-align: center;
             box-shadow: 0 0 40px rgba(56, 189, 248, 0.25);
         }
 
-        /* Cặp hộp sáng biểu cảm phía trên */
+        /* Cặp hộp mắt xanh phát sáng & Biểu cảm */
+        .face-section {
+            margin-bottom: 25px;
+        }
         .face-boxes {
             display: flex;
             justify-content: center;
-            gap: 18px;
-            margin-bottom: 30px;
+            gap: 16px;
+            margin-bottom: 8px;
         }
         .box-item {
-            width: 38px;
-            height: 44px;
+            width: 36px;
+            height: 42px;
             background: linear-gradient(135deg, #38bdf8, #0284c7);
             border-radius: 12px;
             box-shadow: 0 0 20px rgba(56, 189, 248, 0.8);
             animation: bounceBox 2s infinite ease-in-out;
         }
-        .box-item:nth-child(2) {
-            animation-delay: 0.3s;
-        }
+        .box-item:nth-child(2) { animation-delay: 0.3s; }
         @keyframes bounceBox {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
+            50% { transform: translateY(-5px); }
+        }
+        .expressions {
+            font-size: 1.1rem;
+            color: #7dd3fc;
+            letter-spacing: 4px;
+            font-weight: bold;
         }
 
-        /* Hiệu ứng hiển thị chữ */
+        /* Khu vực chữ hiển thị */
         .message-box {
             font-size: 1.15rem;
-            line-height: 1.8;
+            line-height: 1.7;
             color: #f1f5f9;
-            min-height: 120px;
+            min-height: 110px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
             margin-bottom: 25px;
-            animation: fadeInText 0.5s ease;
+            animation: fadeInText 0.4s ease;
         }
         @keyframes fadeInText {
-            from { opacity: 0; transform: translateY(12px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -123,12 +130,38 @@
             font-weight: 700;
         }
 
-        /* Nút tương tác */
+        /* Thanh tiến trình loading (mô phỏng đoạn bơm nhiên liệu trong video) */
+        .loader-wrapper {
+            display: none;
+            width: 100%;
+            margin: 15px 0;
+            text-align: left;
+        }
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: #38bdf8;
+            transition: width 2s linear;
+        }
+        .loader-text {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        /* Nút bấm tương tác */
         .next-btn {
             background: linear-gradient(135deg, #38bdf8, #2563eb);
             color: #ffffff;
             border: none;
-            padding: 13px 30px;
+            padding: 12px 28px;
             border-radius: 30px;
             font-size: 1.05rem;
             font-weight: 600;
@@ -137,22 +170,7 @@
             transition: all 0.2s ease;
             outline: none;
         }
-        .next-btn:active {
-            transform: scale(0.94);
-        }
-
-        .flower-decoration {
-            position: absolute;
-            bottom: -15px;
-            left: 20px;
-            font-size: 24px;
-            pointer-events: none;
-            opacity: 0.8;
-        }
-        .flower-decoration.right {
-            left: auto;
-            right: 20px;
-        }
+        .next-btn:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
@@ -160,50 +178,61 @@
     <div class="music-btn" id="musicToggle" onclick="toggleMusic()">🎵</div>
     <canvas id="bgCanvas"></canvas>
 
-    <!-- Nhạc nền "Vì đã lỡ yêu em rồi" trực tiếp -->
+    <!-- Nhạc nền "Vì đã lỡ yêu em rồi" -->
     <audio id="bgAudio" loop preload="auto" src="https://files.catbox.moe/knh51p.mp3"></audio>
 
     <div class="container">
-        <div class="face-boxes">
-            <div class="box-item"></div>
-            <div class="box-item"></div>
+        <div class="face-section">
+            <div class="face-boxes">
+                <div class="box-item"></div>
+                <div class="box-item"></div>
+            </div>
+            <div class="expressions" id="exprText">^ ^</div>
         </div>
 
         <div class="message-box" id="textContent">
             Này chị gì ơi... Bấm vào đây để xem chút bất ngờ nhé! ✨
         </div>
 
-        <button class="next-btn" id="actionBtn" onclick="nextStep()">Bắt đầu thui 😉</button>
+        <!-- Thanh loading mô phỏng hiệu ứng máy bay/nhiên liệu trong video -->
+        <div class="loader-wrapper" id="loaderBox">
+            <div class="loader-text" id="loaderText">Đang bơm nhiên liệu... 0%</div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progressFill"></div>
+            </div>
+        </div>
 
-        <div class="flower-decoration">🌷</div>
-        <div class="flower-decoration right">🌸</div>
+        <button class="next-btn" id="actionBtn" onclick="nextStep()">Bắt đầu thui 😉</button>
     </div>
 
     <script>
-        // Kịch bản chuẩn theo yêu cầu của bạn
+        // Kịch bản kết hợp hoàn hảo giữa ý bạn và hiệu ứng trong video
         const steps = [
-            "Hôm nay 19 chưa có gì đặc biệt...",
-            "Nó chỉ là một ngày bình thường cạnh một <span class='highlight'>ngày mai rất đặc biệt!</span> ✨",
-            "Em mới gặp chị á... Nhưng em thấy chị là một người dễ thương, dễ gần kkk. 😊",
-            "Nói ra hơi ngại nhưng em mong hôm nay tạo được một cái bất ngờ gì cho chị!",
-            "Tối 19 có cái gì đó thì chẳng phải <span class='highlight'>ngày 20 vui cả ngày</span> à... 🌸",
-            "Em chúc chị luôn xinh đẹp, chúc chị luôn giữ được nụ cười rạng rỡ mỗi ngày! 🥰",
-            "🍀 Em tặng chị cỏ 4 lá này...\nChúc chị luôn gặp thật nhiều may mắn và bình an!",
-            "Chị muốn xem tiếp nữa không nhỉ?..."
+            { text: "Này chị gì ơi... Hôm nay 19 chưa có gì đặc biệt...", expr: "^ ^", btn: "Xem tiếp nha..." },
+            { text: "Nó chỉ là một ngày bình thường cạnh một <span class='highlight'>ngày mai rất đặc biệt!</span> ✨", expr: "> <", btn: "Xem tiếp nào..." },
+            { text: "Em mới gặp chị á... Nhưng em thấy chị là một người dễ thương, dễ gần kkk. 😊", expr: "^ ^", btn: "Xem tiếp cơ..." },
+            { text: "Nói ra hơi ngại nhưng em mong hôm nay tạo được một chút bất ngờ gì cho chị!", expr: "• •", btn: "Xem tiếp nữa..." },
+            { text: "Tối 19 có cái gì đó vui vui thì chẳng phải <span class='highlight'>ngày 20 vui cả ngày</span> à... 🌸", expr: "♥ ♥", btn: "Thế còn gì nữa?" },
+            { text: "🍀 Em tặng chị cỏ 4 lá này...\nChúc chị luôn gặp thật nhiều may mắn và bình an!", expr: "^ ^", btn: "Chị muốn xem tiếp chứ?" },
+            { text: "Chị muốn xem tiếp chữ không?... ✈️", expr: "> v <", btn: "Có chứ!", isLoader: true },
+            { text: "<span class='highlight' style='font-size: 1.3rem;'>Ể? Hết rồi! 😜</span><br><br>... nhưng mà hết mất rồi!<br>Nếu chị muốn xem thêm thì <span class='highlight'>đợi ngày mai 20/10 nha!</span> 💖", expr: "v v", end: true }
         ];
 
         let currentStep = -1;
         const textElement = document.getElementById('textContent');
+        const exprElement = document.getElementById('exprText');
         const btnElement = document.getElementById('actionBtn');
+        const loaderBox = document.getElementById('loaderBox');
+        const progressFill = document.getElementById('progressFill');
+        const loaderText = document.getElementById('loaderText');
+        
         const audio = document.getElementById('bgAudio');
         const musicToggle = document.getElementById('musicToggle');
         let musicStarted = false;
 
         function toggleMusic() {
             if (audio.paused) {
-                audio.play().then(() => {
-                    musicToggle.classList.add('playing');
-                }).catch(e => console.log(e));
+                audio.play().then(() => { musicToggle.classList.add('playing'); }).catch(()=>{});
             } else {
                 audio.pause();
                 musicToggle.classList.remove('playing');
@@ -211,33 +240,54 @@
         }
 
         function nextStep() {
-            // Đảm bảo nhạc phát ngay khi bấm nút đầu tiên
             if (!musicStarted) {
                 audio.play().then(() => {
                     musicStarted = true;
                     musicToggle.classList.add('playing');
-                }).catch(err => {
-                    console.log("Autoplay blocked:", err);
-                });
+                }).catch(()=>{});
             }
 
             currentStep++;
 
             if (currentStep < steps.length) {
-                textElement.innerHTML = steps[currentStep];
-                if (currentStep === steps.length - 1) {
-                    btnElement.innerText = "Xem tiếp xem có gì nào...";
-                } else {
-                    btnElement.innerText = "Xem tiếp nha...";
+                let data = steps[currentStep];
+                exprElement.innerText = data.expr;
+
+                // Nếu là bước có hiệu ứng loading giống video
+                if (data.isLoader) {
+                    textElement.style.display = 'none';
+                    loaderBox.style.display = 'block';
+                    btnElement.style.display = 'none';
+                    
+                    let percent = 0;
+                    progressFill.style.width = '0%';
+                    let interval = setInterval(() => {
+                        percent += 5;
+                        loaderText.innerText = `Đang bơm nhiên liệu... ${percent}%`;
+                        progressFill.style.width = percent + '%';
+                        if (percent >= 100) {
+                            clearInterval(interval);
+                            setTimeout(() => {
+                                loaderBox.style.display = 'none';
+                                textElement.style.display = 'flex';
+                                btnElement.style.display = 'inline-block';
+                                nextStep(); // Tự nhảy sang bước kết quả luôn
+                            }, 500);
+                        }
+                    }, 50);
+                    return;
                 }
-            } else {
-                // Cú twist cuối cùng chuẩn chỉnh
-                textElement.innerHTML = "<span class='highlight' style='font-size: 1.35rem;'>Ể? Hết rồi! 😜</span><br><br>... nhưng mà hết mất rồi!<br>Nếu chị muốn xem thêm thì <span class='highlight'>đợi ngày mai 20/10 nha!</span> 💖";
-                btnElement.style.display = 'none';
+
+                textElement.innerHTML = data.text;
+                if (data.end) {
+                    btnElement.style.display = 'none';
+                } else {
+                    btnElement.innerText = data.btn;
+                }
             }
         }
 
-        // Hiệu ứng sao lấp lánh nền
+        // Hiệu ứng bầu trời sao chuyển động
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
@@ -249,7 +299,7 @@
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
                 size: Math.random() * 2.5 + 0.8,
-                speed: Math.random() * 0.8 + 0.2,
+                speed: Math.random() * 0.7 + 0.2,
                 opacity: Math.random() * 0.8 + 0.2
             });
         }
