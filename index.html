@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chút Bất Ngờ</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #fff5f7 0%, #ffe3e8 100%);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 400px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .active { display: flex; }
+
+        h1 { color: #d63384; font-size: 1.4em; margin-bottom: 15px; }
+        p { color: #4a4a4a; font-size: 1.05em; line-height: 1.6; margin: 8px 0; }
+
+        .btn {
+            background-color: #ff6b81;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            box-shadow: 0 4px 12px rgba(255, 107, 129, 0.3);
+            transition: all 0.2s ease;
+        }
+        .btn:active { transform: scale(0.95); }
+
+        .clover {
+            font-size: 50px;
+            margin: 15px 0;
+            animation: pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Màn 1 -->
+    <div id="scr1" class="screen active">
+        <h1>Chút bất ngờ nhỏ cho chị... ✨</h1>
+        <p>Hôm nay 19 chưa có gì đặc biệt...</p>
+        <p>Nó chỉ là một ngày bình thường cạnh một ngày mai rất đặc biệt!</p>
+        <button class="btn" onclick="nextScreen(1)">Xem tiếp hông chị? 😉</button>
+    </div>
+
+    <!-- Màn 2 -->
+    <div id="scr2" class="screen">
+        <p>Em mới gặp chị nhưng em thấy chị dễ thương, dễ gần kkk. 😊</p>
+        <p>Nói hơi ngại nhưng em mong hôm nay tạo được bất ngờ gì đó cho chị!</p>
+        <p>Tối 19 có cái gì đó thì chẳng phải 20 vui cả ngày à... 🍀</p>
+        <button class="btn" onclick="nextScreen(2)">Xem tiếp nha...</button>
+    </div>
+
+    <!-- Màn 3 -->
+    <div id="scr3" class="screen">
+        <p>Em chúc chị luôn xinh đẹp!</p>
+        <p>Chúc chị luôn giữ được nụ cười rạng rỡ... 🥰</p>
+        <div class="clover">🍀</div>
+        <p>Em tặng chị cỏ 4 lá này...</p>
+        <p>Chúc chị luôn gặp thật nhiều may mắn!</p>
+        <button class="btn" onclick="nextScreen(3)">Hông biết còn gì nữa hông...</button>
+    </div>
+
+    <!-- Màn 4 -->
+    <div id="scr4" class="screen">
+        <h1>Ể? Hết rồi! 😜</h1>
+        <p>... nhưng mà hết mất rồi!</p>
+        <p>Nếu chị muốn xem thêm thì đợi ngày mai nha! 💖</p>
+    </div>
+
+    <script>
+        function nextScreen(current) {
+            document.getElementById('scr' + current).classList.remove('active');
+            let next = current + 1;
+            document.getElementById('scr' + next).classList.add('active');
+        }
+    </script>
+</body>
+</html>
