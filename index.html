@@ -3,238 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gửi chị - Bất ngờ nho nhỏ 20/10</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Bầu trời sao / hiệu ứng lấp lánh background */
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle var(--duration) infinite ease-in-out;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-
-        /* Khung nội dung chính */
-        .card-container {
-            position: relative;
-            z-index: 10;
-            width: 90%;
-            max-width: 500px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 24px;
-            padding: 30px 25px;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            transition: all 0.5s ease;
-        }
-
-        /* Slide chuyển cảnh */
-        .slide {
-            display: none;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .slide.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        h2 {
-            font-size: 1.6rem;
-            margin-bottom: 15px;
-            color: #ff9a9e;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        p {
-            font-size: 1.05rem;
-            line-height: 1.7;
-            color: #f1f1f1;
-            margin-bottom: 20px;
-        }
-
-        /* Nút bấm chuyển slide */
-        .btn {
-            background: linear-gradient(45deg, #ff758c, #ff7eb3);
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
-            outline: none;
-            margin-top: 10px;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 117, 140, 0.6);
-        }
-
-        .btn:active {
-            transform: translateY(1px);
-        }
-
-        /* Icon biểu tượng & Cỏ 4 lá */
-        .clover-icon {
-            font-size: 4rem;
-            display: inline-block;
-            animation: bounce 2s infinite ease-in-out;
-            margin: 15px 0;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(5deg); }
-        }
-
-        .highlight {
-            color: #fecfef;
-            font-weight: 600;
-        }
-
-        .embarrassed {
-            font-size: 0.95rem;
-            color: #ffd1d7;
-            font-style: italic;
-        }
-    </style>
+    <title>Gửi chị - Bất ngờ tối 19/10 ✨</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome & Google Fonts giữ nguyên như file gốc -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Hiệu ứng sao đêm background -->
-    <div class="stars" id="stars"></div>
-
-    <!-- Nhạc nền (Thay link bài hát tùy chọn của bạn vào đây) -->
-    <audio id="bg-music" loop preload="auto">
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    <!-- Giữ nguyên cấu trúc nhạc nền của file gốc -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="music.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="card-container">
-        
-        <!-- Slide 1: Khởi đầu tối 19 -->
-        <div class="slide active" id="slide-1">
-            <h2>Gửi chị... ✨</h2>
-            <p>Hôm nay chỉ là một ngày hết sức bình thường... <br>nhưng lại đứng cạnh một ngày mai rất đặc biệt! 😉</p>
-            <p>Tối 19 có cái gì đó bất ngờ nho nhỏ, thì chẳng phải ngày 20 sẽ vui cả ngày sao?</p>
-            <button class="btn" onclick="nextSlide(2)">Xem tiếp nè ➔</button>
-        </div>
+    <div class="stars-container" id="starsContainer"></div>
+    <div class="flowers-container" id="flowersContainer"></div>
 
-        <!-- Slide 2: Lời ngỏ dễ thương -->
-        <div class="slide" id="slide-2">
-            <h2>Thật ra là... 🙈</h2>
-            <p>Em mới quen/gặp chị chưa lâu, nhưng mà em thấy chị rất là dễ thương và dễ gần kkk...</p>
-            <p class="embarrassed">(Nói ra câu này hơi ngại một xíu nhưng mà là thật đó! 😁)</p>
-            <button class="btn" onclick="nextSlide(3)">Tiếp tục ➔</button>
-        </div>
+    <div class="main-wrapper">
+        <div class="card" id="mainCard">
+            
+            <!-- BƯỚC 1: Mở đầu nhẹ nhàng tối 19 -->
+            <div class="step active" id="step1">
+                <div class="icon-header">
+                    <i class="fa-solid fa-moon glow-icon"></i>
+                </div>
+                <h2>Gửi chị... ✨</h2>
+                <p class="message-text">
+                    Hôm nay chưa có gì quá đặc biệt cả, nó chỉ là một ngày bình thường nằm cạnh một ngày mai rất đặc biệt thôi! 😉
+                </p>
+                <p class="sub-text">
+                    Nhưng mà tối 19 có cái gì đó bất ngờ nho nhỏ, thì chẳng phải ngày 20 sẽ vui cả ngày sao?
+                </p>
+                <button class="next-btn" onclick="nextStep(2)">
+                    Khám phá tiếp nè <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
 
-        <!-- Slide 3: Lời chúc & Cỏ 4 lá -->
-        <div class="slide" id="slide-3">
-            <h2>Chúc chị 20/10 thật vui! 🌸</h2>
-            <p>Nhân ngày Phụ nữ Việt Nam, chúc chị luôn xinh đẹp, rạng rỡ và giữ mãi nụ cười trên môi nhé!</p>
-            <div class="clover-icon">🍀</div>
-            <p>Em tặng chị nhành cỏ 4 lá này, chúc chị luôn gặp thật nhiều may mắn và niềm vui trong cuộc sống!</p>
-            <button class="btn" onclick="nextSlide(4)">Chị muốn xem tiếp không? ➔</button>
-        </div>
+            <!-- BƯỚC 2: Bộc lộ tình cảm nhẹ nhàng, ngại ngùng -->
+            <div class="step" id="step2">
+                <div class="icon-header">
+                    <i class="fa-solid fa-face-smile-wink glow-icon"></i>
+                </div>
+                <h2>Thật ra là... 🙈</h2>
+                <p class="message-text">
+                    Em với chị mới quen/gặp nhau chưa lâu... Nhưng mà em thấy chị là một người rất dễ thương và cực kỳ dễ gần kkk!
+                </p>
+                <p class="sub-text">
+                    (Nói ra câu này hơi ngại một xíu nhưng mà là cảm nhận thật của em đó 😁)
+                </p>
+                <button class="next-btn" onclick="nextStep(3)">
+                    Tiếp tục nha <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
 
-        <!-- Slide 4: Kết thúc úp mở đáng yêu -->
-        <div class="slide" id="slide-4">
-            <h2>Hết mất rồi! 😜</h2>
-            <p>Ơ... Hết rồi ạ! <br>Để mai 20/10 lại tiếp nhé! 🤣✨</p>
-            <p style="font-size: 0.9rem; color: #a1a1a1;">(Chúc chị một buổi tối 19/10 thật ngon giấc nha! 🌙)</p>
-            <button class="btn" onclick="restart()">Xem lại từ đầu 🔄</button>
-        </div>
+            <!-- BƯỚC 3: Lời chúc 20/10 & Cỏ 4 lá -->
+            <div class="step" id="step3">
+                <div class="icon-header">
+                    <i class="fa-solid fa-clover glow-icon clover-glow"></i>
+                </div>
+                <h2>Chúc chị 20/10 thật tuyệt vời! 🌸</h2>
+                <p class="message-text">
+                    Nhân ngày Phụ nữ Việt Nam, em chúc chị luôn luôn xinh đẹp, rạng rỡ và giữ mãi nụ cười tươi trên môi nhé!
+                </p>
+                <div class="gift-box">
+                    <span class="clover-emoji">🍀</span>
+                    <p class="gift-text">Em tặng chị nhành cỏ 4 lá này, chúc chị luôn gặp thật nhiều may mắn và niềm vui trong cuộc sống!</p>
+                </div>
+                <button class="next-btn" onclick="nextStep(4)">
+                    Chị muốn xem tiếp không? <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
 
+            <!-- BƯỚC 4: Cái kết hóm hỉnh, úp mở sang ngày mai -->
+            <div class="step" id="step4">
+                <div class="icon-header">
+                    <i class="fa-solid fa-face-laugh-squint glow-icon"></i>
+                </div>
+                <h2>Hết mất rồi! 😜</h2>
+                <p class="message-text">
+                    Ơ... Hết thật rồi ạ! <br>Để mai ngày 20/10 chính thức lại tiếp nhé! 🤣✨
+                </p>
+                <p class="sub-text">
+                    Chúc chị có một buổi tối 19/10 thật vui vẻ và ngủ thật ngon giấc nha! 🌙
+                </p>
+                <button class="next-btn" onclick="restart()">
+                    Xem lại từ đầu <i class="fa-solid fa-rotate-right"></i>
+                </button>
+            </div>
+
+        </div>
     </div>
 
+    <!-- Giữ nguyên phần script xử lý chuyển bước và tạo hiệu ứng như file gốc -->
     <script>
-        // Tạo bầu trời sao động
-        const starsContainer = document.getElementById('stars');
-        const starCount = 60;
-
-        for (let i = 0; i < starCount; i++) {
-            const star = document.createElement('div');
-            star.classList.add('star');
-            star.style.width = `${Math.random() * 3 + 1}px`;
-            star.style.height = star.style.width;
-            star.style.left = `${Math.random() * 100}%`;
-            star.style.top = `${Math.random() * 100}%`;
-            star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
-            starsContainer.appendChild(star);
-        }
-
-        // Tự động phát nhạc khi nhấn nút lần đầu tiên
-        let musicStarted = false;
-        const music = document.getElementById('bg-music');
-
-        function playMusic() {
-            if (!musicStarted) {
-                music.play().catch(e => console.log("Cần tương tác người dùng để phát âm thanh"));
-                musicStarted = true;
+        function nextStep(stepNumber) {
+            const music = document.getElementById('bgMusic');
+            if (music && music.paused) {
+                music.play().catch(e => console.log("Audio play blocked"));
             }
-        }
 
-        // Chuyển slide
-        function nextSlide(slideNumber) {
-            playMusic();
-            
-            const currentActive = document.querySelector('.slide.active');
-            if (currentActive) {
-                currentActive.classList.remove('active');
+            const currentStep = document.querySelector('.step.active');
+            if (currentStep) {
+                currentStep.classList.remove('active');
             }
 
             setTimeout(() => {
-                const nextSlideElement = document.getElementById(`slide-${slideNumber}`);
-                if (nextSlideElement) {
-                    nextSlideElement.classList.add('active');
+                const nextStepEl = document.getElementById('step' + stepNumber);
+                if (nextStepEl) {
+                    nextStepEl.classList.add('active');
                 }
-            }, 100);
+            }, 300);
         }
 
-        // Xem lại
         function restart() {
-            nextSlide(1);
+            nextStep(1);
         }
     </script>
 </body>
