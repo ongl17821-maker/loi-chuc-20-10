@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Chút Bất Ngờ Cho Chị ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Quicksand', sans-serif;
             user-select: none;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background: linear-gradient(135deg, #ffd1dc 0%, #ffe3e8 50%, #fff0f5 100%);
+            background: linear-gradient(135deg, #fbc531 0%, #e84118 50%, #c23616 100%);
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -23,26 +25,26 @@
             position: relative;
         }
 
-        /* Nút bật/tắt nhạc với đĩa quay */
-        .music-control {
+        /* Nút bật tắt nhạc */
+        .music-disk {
             position: fixed;
             top: 20px;
             right: 20px;
-            width: 42px;
-            height: 42px;
-            background: rgba(255, 255, 255, 0.85);
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
             cursor: pointer;
             z-index: 100;
-            font-size: 20px;
-            transition: transform 0.3s ease;
+            font-size: 22px;
+            transition: transform 0.3s;
         }
 
-        .music-control.spin {
+        .music-disk.playing {
             animation: spin 3s linear infinite;
         }
 
@@ -50,102 +52,85 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Thẻ nội dung chính dạng Card Glassmorphism */
-        .card-container {
+        /* Khung nội dung chính */
+        .wrapper {
             width: 90%;
-            max-width: 380px;
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 24px;
-            padding: 30px 24px;
-            box-shadow: 0 15px 35px rgba(214, 51, 132, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 30px 22px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.8);
             text-align: center;
             position: relative;
             z-index: 10;
         }
 
-        .screen {
+        .step {
             display: none;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: fadeIn 0.5s ease forwards;
         }
 
-        .screen.active {
+        .step.active {
             display: flex;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        h1 {
-            color: #d63384;
-            font-size: 1.45rem;
-            margin-bottom: 16px;
-            font-weight: 700;
-            line-height: 1.3;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         p {
-            color: #495057;
+            color: #2f3640;
             font-size: 1.05rem;
             line-height: 1.6;
-            margin: 8px 0;
+            margin: 10px 0;
             font-weight: 500;
         }
 
         .highlight {
-            color: #d63384;
+            color: #e84118;
             font-weight: 700;
         }
 
-        /* Nút tương tác đẹp mắt */
-        .btn {
-            background: linear-gradient(45deg, #ff6b81, #ff8eacc7);
+        /* Nút bấm */
+        .next-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5253);
             color: white;
             border: none;
-            padding: 13px 28px;
-            border-radius: 30px;
+            padding: 12px 26px;
+            border-radius: 25px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 24px;
-            box-shadow: 0 6px 18px rgba(255, 107, 129, 0.35);
-            transition: all 0.25s ease;
+            margin-top: 20px;
+            box-shadow: 0 6px 20px rgba(238, 82, 83, 0.4);
+            transition: all 0.2s;
             outline: none;
         }
 
-        .btn:active {
-            transform: scale(0.94);
-            box-shadow: 0 2px 8px rgba(255, 107, 129, 0.3);
+        .next-btn:active {
+            transform: scale(0.95);
         }
 
-        /* Hiệu ứng Cỏ 4 lá */
-        .clover-box {
-            font-size: 65px;
-            margin: 15px 0;
-            display: inline-block;
-            animation: bounce 1.5s infinite alternate;
+        /* Icon cỏ 4 lá */
+        .clover-icon {
+            font-size: 60px;
+            margin: 10px 0;
+            animation: bounce 1.2s infinite alternate;
         }
 
         @keyframes bounce {
             0% { transform: translateY(0) scale(1); }
-            100% { transform: translateY(-12px) scale(1.1); }
+            100% { transform: translateY(-10px) scale(1.1); }
         }
 
-        /* Hiệu ứng Trái tim/Hoa rơi background */
-        .heart {
+        /* Hiệu ứng tim/hoa bay */
+        .floating-item {
             position: fixed;
             top: -10vh;
             font-size: 20px;
@@ -156,111 +141,108 @@
         }
 
         @keyframes fall {
-            to {
-                transform: translateY(105vh) rotate(360deg);
-            }
+            to { transform: translateY(105vh) rotate(360deg); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Nút điều khiển nhạc -->
-    <div class="music-control" id="musicBtn" onclick="toggleMusic()">🎵</div>
+    <!-- Đĩa nhạc góc phải -->
+    <div class="music-disk" id="musicBtn" onclick="toggleAudio()">💿</div>
 
-    <!-- Nhạc nền Lofi nhẹ nhàng -->
-    <audio id="bgMusic" loop src="https://assets.mixkit.co/music/preview/mixkit-romantic-sunset-688.mp3"></audio>
+    <!-- Nhạc nền bài hát lofi/chill nhẹ nhàng hợp tâm trạng -->
+    <audio id="myAudio" loop src="https://assets.mixkit.co/music/preview/mixkit-a-very-happy-christmas-897.mp3"></audio>
 
-    <div class="card-container">
+    <div class="wrapper">
         
-        <!-- Màn 1: Mở đầu ngày 19 -->
-        <div id="scr1" class="screen active">
-            <h1>Chút bất ngờ nhỏ cho chị... ✨</h1>
+        <!-- Bước 1 -->
+        <div id="step1" class="step active">
             <p>Hôm nay 19 chưa có gì đặc biệt...</p>
-            <p>Nó chỉ là một ngày bình thường cạnh một <span class="highlight">ngày mai rất đặc biệt!</span></p>
-            <button class="btn" onclick="nextScreen(1)">Xem tiếp hông chị? 😉</button>
+            <p>Nó chỉ là một ngày bình thường cạnh một <span class="highlight">ngày mai rất đặc biệt!</span> ✨</p>
+            <button class="next-btn" onclick="nextStep(1)">Xem tiếp hông chị? 😉</button>
         </div>
 
-        <!-- Màn 2: Cảm nhận chân thành -->
-        <div id="scr2" class="screen">
-            <p>Em mới gặp chị nhưng em thấy chị rất dễ thương và dễ gần kkk. 😊</p>
-            <p>Nói ra hơi ngại nhưng em mong hôm nay tạo được chút bất ngờ gì đó cho chị!</p>
-            <p>Tối 19 có cái gì đó vui vui thì chẳng phải ngày 20 sẽ tươi cả ngày à... 🌸</p>
-            <button class="btn" onclick="nextScreen(2)">Xem tiếp nha...</button>
+        <!-- Bước 2 -->
+        <div id="step2" class="step">
+            <p>Em mới gặp chị á...</p>
+            <p>Nhưng em thấy chị là một người dễ thương, dễ gần kkk. 😊</p>
+            <p>Nói ra hơi ngại nhưng em mong hôm nay tạo được một cái bất ngờ gì cho chị!</p>
+            <p>Tối 19 có cái gì đó thì chẳng phải <span class="highlight">ngày 20 vui cả ngày</span> à... 🌸</p>
+            <button class="next-btn" onclick="nextStep(2)">Xem tiếp nha...</button>
         </div>
 
-        <!-- Màn 3: Lời chúc & Cỏ 4 lá -->
-        <div id="scr3" class="screen">
-            <p>Chúc chị luôn xinh đẹp!</p>
-            <p>Chúc chị luôn giữ được nụ cười rạng rỡ... 🥰</p>
-            <div class="clover-box">🍀</div>
+        <!-- Bước 3 -->
+        <div id="step3" class="step">
+            <p>Em chúc chị luôn xinh đẹp!</p>
+            <p>Chúc chị luôn giữ được nụ cười rạng rỡ mỗi ngày... 🥰</p>
+            <div class="clover-icon">🍀</div>
             <p>Em tặng chị cỏ 4 lá này...</p>
             <p>Chúc chị luôn gặp thật nhiều may mắn!</p>
-            <button class="btn" onclick="nextScreen(3)">Hông biết còn gì nữa hông...</button>
+            <button class="next-btn" onclick="nextStep(3)">Chị muốn xem tiếp không?</button>
         </div>
 
-        <!-- Màn 4: Kết thúc bất ngờ / Hài hước -->
-        <div id="scr4" class="screen">
-            <h1>Ể? Hết rồi! 😜</h1>
+        <!-- Bước 4: Kết thúc -->
+        <div id="step4" class="step">
+            <p style="font-size: 1.2rem; font-weight: 700; color: #e84118;">Ể? Hết rồi! 😜</p>
             <p>... nhưng mà hết mất rồi!</p>
-            <p>Nếu chị muốn xem thêm thì <span class="highlight">đợi ngày mai 20/10</span> nha! 💖</p>
-            <p style="font-size: 0.9rem; color: #888; margin-top: 15px;">(Chúc chị một buổi tối 19/10 thật nhiều niềm vui nhé! ✨)</p>
+            <p>Nếu chị muốn xem thêm thì <span class="highlight">đợi ngày mai nha!</span> 💖</p>
+            <p style="font-size: 0.9rem; color: #666; margin-top: 15px;">(Tối 19/10 vui vẻ nhé chị ơi! ✨)</p>
         </div>
 
     </div>
 
     <script>
-        // Tự động bật nhạc khi chạm vào màn hình lần đầu
-        let musicStarted = false;
-        const music = document.getElementById('bgMusic');
+        let hasStarted = false;
+        const audio = document.getElementById('myAudio');
         const musicBtn = document.getElementById('musicBtn');
 
-        function playMusic() {
-            if (!musicStarted) {
-                music.play().then(() => {
-                    musicStarted = true;
-                    musicBtn.classList.add('spin');
+        function playAudio() {
+            if (!hasStarted) {
+                audio.play().then(() => {
+                    hasStarted = true;
+                    musicBtn.classList.add('playing');
                 }).catch(() => {});
             }
         }
 
-        function toggleMusic() {
-            if (music.paused) {
-                music.play();
-                musicBtn.classList.add('spin');
+        function toggleAudio() {
+            if (audio.paused) {
+                audio.play();
+                musicBtn.classList.add('playing');
             } else {
-                music.pause();
-                musicBtn.classList.remove('spin');
+                audio.pause();
+                musicBtn.classList.remove('playing');
             }
         }
 
-        document.body.addEventListener('click', playMusic, { once: true });
+        // Tự động bật nhạc khi chạm màn hình lần đầu
+        document.body.addEventListener('click', playAudio, { once: true });
 
-        // Chuyển màn hình
-        function nextScreen(current) {
-            playMusic();
-            document.getElementById('scr' + current).classList.remove('active');
+        function nextStep(current) {
+            playAudio();
+            document.getElementById('step' + current).classList.remove('active');
             let next = current + 1;
-            document.getElementById('scr' + next).classList.add('active');
+            document.getElementById('step' + next).classList.add('active');
         }
 
-        // Tạo hiệu ứng tim & hoa rơi liên tục
-        const icons = ['🌸', '💖', '✨', '💕', '🌷', '🍀'];
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerText = icons[Math.floor(Math.random() * icons.length)];
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 3 + 's';
-            heart.style.opacity = Math.random() * 0.7 + 0.3;
-            heart.style.fontSize = Math.random() * 12 + 16 + 'px';
-            document.body.appendChild(heart);
+        // Hiệu ứng tim/hoa rơi
+        const symbols = ['🌸', '💖', '✨', '🍀', '🌷', '💫'];
+        function createSymbol() {
+            const item = document.createElement('div');
+            item.classList.add('floating-item');
+            item.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+            item.style.left = Math.random() * 100 + 'vw';
+            item.style.animationDuration = Math.random() * 3 + 3 + 's';
+            item.style.opacity = Math.random() * 0.7 + 0.3;
+            item.style.fontSize = Math.random() * 10 + 16 + 'px';
+            document.body.appendChild(item);
 
             setTimeout(() => {
-                heart.remove();
+                item.remove();
             }, 6000);
         }
 
-        setInterval(createHeart, 300);
+        setInterval(createSymbol, 350);
     </script>
 </body>
 </html>
