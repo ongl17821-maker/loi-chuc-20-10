@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chúc Mừng Ngày 20/10</title>
+    <title>Gửi chị - Bất ngờ nho nhỏ 20/10</title>
     <style>
         * {
             margin: 0;
@@ -12,19 +12,20 @@
         }
 
         body {
-            background: radial-gradient(circle at center, #1b0033 0%, #090014 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #fff;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        /* Hiệu ứng bầu trời sao */
-        #starfield {
-            position: absolute;
+        /* Bầu trời sao / hiệu ứng lấp lánh background */
+        .stars {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -35,7 +36,7 @@
 
         .star {
             position: absolute;
-            background: #fff;
+            background: white;
             border-radius: 50%;
             animation: twinkle var(--duration) infinite ease-in-out;
         }
@@ -45,93 +46,196 @@
             50% { opacity: 1; transform: scale(1.2); }
         }
 
-        /* Khung thiệp chính */
-        .card {
+        /* Khung nội dung chính */
+        .card-container {
             position: relative;
             z-index: 10;
-            background: rgba(255, 255, 255, 0.08);
+            width: 90%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 40px;
             border-radius: 24px;
+            padding: 30px 25px;
             text-align: center;
-            max-width: 480px;
-            width: 90%;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 105, 180, 0.2);
-            animation: floatCard 4s ease-in-out infinite;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            transition: all 0.5s ease;
         }
 
-        @keyframes floatCard {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        /* Slide chuyển cảnh */
+        .slide {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
 
-        h1 {
-            font-size: 2.2rem;
-            color: #ff66b2;
+        .slide.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            font-size: 1.6rem;
             margin-bottom: 15px;
-            text-shadow: 0 0 15px rgba(255, 102, 178, 0.6);
+            color: #ff9a9e;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         p {
             font-size: 1.05rem;
-            line-height: 1.6;
-            color: #ffccff;
-            margin-bottom: 25px;
+            line-height: 1.7;
+            color: #f1f1f1;
+            margin-bottom: 20px;
         }
 
-        .heart {
-            font-size: 3rem;
-            animation: pulseHeart 1.2s infinite;
+        /* Nút bấm chuyển slide */
+        .btn {
+            background: linear-gradient(45deg, #ff758c, #ff7eb3);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            outline: none;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 117, 140, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Icon biểu tượng & Cỏ 4 lá */
+        .clover-icon {
+            font-size: 4rem;
             display: inline-block;
+            animation: bounce 2s infinite ease-in-out;
+            margin: 15px 0;
         }
 
-        @keyframes pulseHeart {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.25); }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .highlight {
+            color: #fecfef;
+            font-weight: 600;
+        }
+
+        .embarrassed {
+            font-size: 0.95rem;
+            color: #ffd1d7;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
 
-    <!-- Lớp nền sao động -->
-    <div id="starfield"></div>
+    <!-- Hiệu ứng sao đêm background -->
+    <div class="stars" id="stars"></div>
 
-    <!-- Hộp nội dung thiệp -->
-    <div class="card">
-        <h1>Chúc Mừng 20/10 ✨</h1>
-        <p>Chúc một nửa thế giới luôn rạng rỡ, xinh đẹp, luôn tràn ngập niềm vui, hạnh phúc và gặt hái thật nhiều thành công trong cuộc sống!</p>
-        <div class="heart">💖</div>
+    <!-- Nhạc nền (Thay link bài hát tùy chọn của bạn vào đây) -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="card-container">
+        
+        <!-- Slide 1: Khởi đầu tối 19 -->
+        <div class="slide active" id="slide-1">
+            <h2>Gửi chị... ✨</h2>
+            <p>Hôm nay chỉ là một ngày hết sức bình thường... <br>nhưng lại đứng cạnh một ngày mai rất đặc biệt! 😉</p>
+            <p>Tối 19 có cái gì đó bất ngờ nho nhỏ, thì chẳng phải ngày 20 sẽ vui cả ngày sao?</p>
+            <button class="btn" onclick="nextSlide(2)">Xem tiếp nè ➔</button>
+        </div>
+
+        <!-- Slide 2: Lời ngỏ dễ thương -->
+        <div class="slide" id="slide-2">
+            <h2>Thật ra là... 🙈</h2>
+            <p>Em mới quen/gặp chị chưa lâu, nhưng mà em thấy chị rất là dễ thương và dễ gần kkk...</p>
+            <p class="embarrassed">(Nói ra câu này hơi ngại một xíu nhưng mà là thật đó! 😁)</p>
+            <button class="btn" onclick="nextSlide(3)">Tiếp tục ➔</button>
+        </div>
+
+        <!-- Slide 3: Lời chúc & Cỏ 4 lá -->
+        <div class="slide" id="slide-3">
+            <h2>Chúc chị 20/10 thật vui! 🌸</h2>
+            <p>Nhân ngày Phụ nữ Việt Nam, chúc chị luôn xinh đẹp, rạng rỡ và giữ mãi nụ cười trên môi nhé!</p>
+            <div class="clover-icon">🍀</div>
+            <p>Em tặng chị nhành cỏ 4 lá này, chúc chị luôn gặp thật nhiều may mắn và niềm vui trong cuộc sống!</p>
+            <button class="btn" onclick="nextSlide(4)">Chị muốn xem tiếp không? ➔</button>
+        </div>
+
+        <!-- Slide 4: Kết thúc úp mở đáng yêu -->
+        <div class="slide" id="slide-4">
+            <h2>Hết mất rồi! 😜</h2>
+            <p>Ơ... Hết rồi ạ! <br>Để mai 20/10 lại tiếp nhé! 🤣✨</p>
+            <p style="font-size: 0.9rem; color: #a1a1a1;">(Chúc chị một buổi tối 19/10 thật ngon giấc nha! 🌙)</p>
+            <button class="btn" onclick="restart()">Xem lại từ đầu 🔄</button>
+        </div>
+
     </div>
 
-    <!-- Script tạo sao tự động gọn gàng -->
     <script>
-        const starfield = document.getElementById('starfield');
-        const numStars = 120; // Số lượng ngôi sao trên màn hình
+        // Tạo bầu trời sao động
+        const starsContainer = document.getElementById('stars');
+        const starCount = 60;
 
-        for (let i = 0; i < numStars; i++) {
+        for (let i = 0; i < starCount; i++) {
             const star = document.createElement('div');
             star.classList.add('star');
-            
-            // Kích thước ngẫu nhiên
-            const size = Math.random() * 3 + 1;
-            star.style.width = `${size}px`;
-            star.style.height = `${size}px`;
-            
-            // Vị trí ngẫu nhiên
-            star.style.top = `${Math.random() * 100}%`;
+            star.style.width = `${Math.random() * 3 + 1}px`;
+            star.style.height = star.style.width;
             star.style.left = `${Math.random() * 100}%`;
-            
-            // Thời gian chớp nháy ngẫu nhiên
-            const duration = (Math.random() * 3 + 2).toFixed(2) + 's';
-            star.style.setProperty('--duration', duration);
-            star.style.animationDuration = duration;
-            
-            starfield.appendChild(star);
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+            starsContainer.appendChild(star);
         }
 
-        console.log("Giao diện 20/10 đã tải thành công và sạch sẽ!");
+        // Tự động phát nhạc khi nhấn nút lần đầu tiên
+        let musicStarted = false;
+        const music = document.getElementById('bg-music');
+
+        function playMusic() {
+            if (!musicStarted) {
+                music.play().catch(e => console.log("Cần tương tác người dùng để phát âm thanh"));
+                musicStarted = true;
+            }
+        }
+
+        // Chuyển slide
+        function nextSlide(slideNumber) {
+            playMusic();
+            
+            const currentActive = document.querySelector('.slide.active');
+            if (currentActive) {
+                currentActive.classList.remove('active');
+            }
+
+            setTimeout(() => {
+                const nextSlideElement = document.getElementById(`slide-${slideNumber}`);
+                if (nextSlideElement) {
+                    nextSlideElement.classList.add('active');
+                }
+            }, 100);
+        }
+
+        // Xem lại
+        function restart() {
+            nextSlide(1);
+        }
     </script>
 </body>
 </html>
